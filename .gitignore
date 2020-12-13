@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/WoolworthsWebAPI/bin
+/WoolworthsWebAPI/.vs/WoolworthsWebAPI/v16
+/WoolworthsWebAPI/obj
+/.vs/WoolworthsWebAPI
+/WooliesXTechChallenge.Test/bin/Debug/netcoreapp3.1
+/WooliesXTechChallenge.Test/obj
