@@ -59,8 +59,6 @@ namespace WoolworthsWebAPI.Services
                     //get product list.
                     var productsList = await serviceAPIRepository.GetProductListAsync();
                     sortedProductList = SortProducts(productsList, sortOption);
-
-
                 }
                 return sortedProductList;
             }

@@ -6,7 +6,6 @@ namespace WoolworthsWebAPI.Models.Validators
     {
         public SortOptionRequestValidator()
         {
-
             RuleFor(x => x.SortOption)
                 .NotEmpty()
                 .Matches("^[a-zA-Z0-9 ]*$");

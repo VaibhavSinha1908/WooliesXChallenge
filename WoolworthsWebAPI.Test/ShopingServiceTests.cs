@@ -14,7 +14,6 @@ namespace WoolworthsWebAPI.Test
 {
     public class Tests
     {
-
         private ServiceAPIRepository APIRepository { get; set; }
         private ShoppingService ShoppingService { get; set; }
 
@@ -189,8 +188,5 @@ namespace WoolworthsWebAPI.Test
 
             Assert.That(result == expectedOutput);
         }
-
-
-
     }
 }

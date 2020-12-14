@@ -10,7 +10,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WoolworthsWebAPI.Controllers.ShoppingController.GetSortedProductOrderAsync(System.String)">
+        <member name="M:WoolworthsWebAPI.Controllers.ShoppingController.GetSortedProductOrderAsync(WoolworthsWebAPI.Models.SortOptionRequest)">
             <summary>
             GET: To get sorted product list based on QueryString param sortOption.
             </summary>

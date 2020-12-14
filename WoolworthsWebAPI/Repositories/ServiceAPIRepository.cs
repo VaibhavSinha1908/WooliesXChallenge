@@ -17,8 +17,6 @@ namespace WoolworthsWebAPI.Repositories
         private readonly IConfiguration configuration;
         private readonly string _remoteServiceBaseUrl;
 
-
-
         public ServiceAPIRepository(HttpClient httpClient, ILogger<ServiceAPIRepository> logger, IConfiguration configuration)
         {
 
@@ -88,7 +86,6 @@ namespace WoolworthsWebAPI.Repositories
                 throw;
             }
         }
-
 
         public async Task<List<Product>> GetProductListAsync()
         {

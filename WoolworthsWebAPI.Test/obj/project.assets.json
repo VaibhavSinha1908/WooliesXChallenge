@@ -6894,11 +6894,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vaibhav\\source\\repos\\WooliesXTechChallenge\\WoolworthsWebAPI.Test\\WoolworthsWebAPI.Test.csproj",
+      "projectUniqueName": "D:\\Project\\WooliesXChallenge\\WoolworthsWebAPI.Test\\WoolworthsWebAPI.Test.csproj",
       "projectName": "WoolworthsWebAPI.Test",
-      "projectPath": "C:\\Users\\vaibhav\\source\\repos\\WooliesXTechChallenge\\WoolworthsWebAPI.Test\\WoolworthsWebAPI.Test.csproj",
+      "projectPath": "D:\\Project\\WooliesXChallenge\\WoolworthsWebAPI.Test\\WoolworthsWebAPI.Test.csproj",
       "packagesPath": "C:\\Users\\vaibhav\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vaibhav\\source\\repos\\WooliesXTechChallenge\\WoolworthsWebAPI.Test\\obj\\",
+      "outputPath": "D:\\Project\\WooliesXChallenge\\WoolworthsWebAPI.Test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -6919,8 +6919,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\vaibhav\\source\\repos\\WooliesXTechChallenge\\WoolworthsWebAPI\\WoolworthsWebAPI.csproj": {
-              "projectPath": "C:\\Users\\vaibhav\\source\\repos\\WooliesXTechChallenge\\WoolworthsWebAPI\\WoolworthsWebAPI.csproj"
+            "D:\\Project\\WooliesXChallenge\\WoolworthsWebAPI\\WoolworthsWebAPI.csproj": {
+              "projectPath": "D:\\Project\\WooliesXChallenge\\WoolworthsWebAPI\\WoolworthsWebAPI.csproj"
             }
           }
         }
@@ -6969,7 +6969,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
