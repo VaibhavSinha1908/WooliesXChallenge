@@ -50,7 +50,7 @@ namespace WoolworthsWebAPI.Controllers
 
         // POST: api/trolleyTotal
         /// <summary>
-        /// POST: Calculates the least trolley total for the given shopping cart.
+        /// POST: Calculates the least trolley total for the given shopping cart using Resources API.
         /// </summary>
         /// <param name="request"></param>
         /// <returns>The least possible trolleyCost for the given list of Products, Specials, Quantities</returns>
@@ -64,6 +64,16 @@ namespace WoolworthsWebAPI.Controllers
             return Ok(result);
         }
 
+
+        // POST: api/trolleyTotal
+        /// <summary>
+        /// POST: Calculates the least trolley total for the given shopping cart using custom DFS recursive logic.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>The least possible trolleyCost for the given list of Products, Specials, Quantities</returns>
+        /// <response code = "200">Least Cost of the Trolley</response>
+        /// <response code = "400">Bad Response</response>
+        /// <response code = "500">Internal server error.(in case of exception)</response>
         [FeatureGate("CustomTrolleyCalculator")]
         [HttpPost("customtrolleytotcal")]
         public async Task<IActionResult> CustomTrolleyCalculator([FromBody] CustomerTrolleyRequest request)
