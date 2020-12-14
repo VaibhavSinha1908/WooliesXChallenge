@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.FeatureManagement;
 using Microsoft.OpenApi.Models;
+using Polly;
 using System;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Reflection;
 using WoolworthsWebAPI.Filters;
 using WoolworthsWebAPI.Repositories;
@@ -34,6 +37,9 @@ namespace WoolworthsWebAPI
                 options.Filters.Add<ValidationFilter>();
             });
 
+            //Add toggle feature functionality.
+            services.AddFeatureManagement();
+
             //registering fluentvalidation validators.
             services.AddControllers()
                     .AddFluentValidation(validator =>
@@ -46,8 +52,14 @@ namespace WoolworthsWebAPI
 
             //Adding Dependency Injections.
             services.AddScoped<IShoppingService, ShoppingService>();
-            services.AddHttpClient<IServiceAPIRepository, ServiceAPIRepository>()
-                .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+            services.AddScoped<IServiceAPIRepository, ServiceAPIRepository>();
+            services.AddHttpClient("WooliesX", client =>
+            {
+                client.BaseAddress = new Uri(Configuration.GetValue<string>("ApplicationData:Resources:BaseUrl"));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            }).SetHandlerLifetime(TimeSpan.FromMinutes(5))
+            .AddTransientHttpErrorPolicy(x => x.WaitAndRetryAsync(3, t => TimeSpan.FromSeconds(2)));
 
             services.AddSwaggerGen(c =>
             {

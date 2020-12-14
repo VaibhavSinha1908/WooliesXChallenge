@@ -6,10 +6,9 @@
 /WoolworthsWebAPI/.vs/WoolworthsWebAPI/v16
 /WoolworthsWebAPI/obj
 /.vs/WoolworthsWebAPI
-
-/WoolworthsWebAPI/.config/dotnet-tools.json
-/WoolworthsWebAPI/Properties/ServiceDependencies/WooliesXTechChallenge - Web Deploy/profile.arm.json
-/WoolworthsWebAPI/Properties/ServiceDependencies/WoolworthWebAPI - Web Deploy/profile.arm.json
-/WoolworthsWebAPI.Test/bin
+/WooliesWebApI.Test/bin
+/WooliesWebApI.Test/obj
+/.idea
+/WoolworthsWebAPI/.config
+/WoolworthsWebAPI.Test/bin/Debug/netcoreapp3.1
 /WoolworthsWebAPI.Test/obj
-/.idea/

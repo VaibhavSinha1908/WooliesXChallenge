@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.FeatureManagement.Mvc;
 using System.Threading.Tasks;
 using WoolworthsWebAPI.Models;
 using WoolworthsWebAPI.Services.Interfaces;
@@ -23,7 +24,6 @@ namespace WoolworthsWebAPI.Controllers
         /// GET: To get the username and token for the user.
         /// </summary>
         /// <returns></returns>
-
         [HttpGet("user")]
         public async Task<IActionResult> GetAsync()
         {
@@ -41,7 +41,6 @@ namespace WoolworthsWebAPI.Controllers
         /// <param name="sortOption"></param>
         /// <returns>Sorted order of the products.</returns>
         /// <response code = "200">Sorted Order of the Product list</response>
-
         [HttpGet("sort")]
         public async Task<IActionResult> GetSortedProductOrderAsync([FromQuery] SortOptionRequest sortOptionRequest)
         {
@@ -51,7 +50,7 @@ namespace WoolworthsWebAPI.Controllers
 
         // POST: api/trolleyTotal
         /// <summary>
-        /// POST: Calculates the least trolley total for the given shopping cart.
+        /// POST: Calculates the least trolley total for the given shopping cart using Resources API.
         /// </summary>
         /// <param name="request"></param>
         /// <returns>The least possible trolleyCost for the given list of Products, Specials, Quantities</returns>
@@ -60,6 +59,24 @@ namespace WoolworthsWebAPI.Controllers
         /// <response code = "500">Internal server error.(in case of exception)</response>
         [HttpPost("trolleytotal")]
         public async Task<IActionResult> PostAsync([FromBody] CustomerTrolleyRequest request)
+        {
+            var result = await service.GetLowestTrolleyTotalAsync(request);
+            return Ok(result);
+        }
+
+
+        // POST: api/trolleyTotal
+        /// <summary>
+        /// POST: Calculates the least trolley total for the given shopping cart using custom DFS recursive logic.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>The least possible trolleyCost for the given list of Products, Specials, Quantities</returns>
+        /// <response code = "200">Least Cost of the Trolley</response>
+        /// <response code = "400">Bad Response</response>
+        /// <response code = "500">Internal server error.(in case of exception)</response>
+        [FeatureGate("CustomTrolleyCalculator")]
+        [HttpPost("customtrolleytotcal")]
+        public async Task<IActionResult> CustomTrolleyCalculator([FromBody] CustomerTrolleyRequest request)
         {
             var result = await service.GetLowestTrolleyTotalAsync3(request);
             return Ok(result);
