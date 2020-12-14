@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WoolworthsWebAPI.Models;
 using WoolworthsWebAPI.Repositories;
@@ -137,7 +136,7 @@ namespace WoolworthsWebAPI.Services
                 }
                 return findCartValue(productDictionary, quantityDictionary, request.Specials);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -203,141 +202,6 @@ namespace WoolworthsWebAPI.Services
             }
 
             return price;
-        }
-
-
-
-        //Custom Implementation of the TrolleyCalculator for split scenario.
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public async Task<decimal> GetLowestTrolleyTotalAsync2(CustomerTrolleyRequest request)
-        {
-            try
-            {
-                logger.LogInformation("In the GetLowestTrolleyTotalAsync() method for Request:" + request);
-                decimal lowestCost = 0, totalCost = 0;
-
-                var productList = request.Products;
-                var specials = request.Specials;
-                var productQuantities = request.Quantities;
-                //calculate totalPrice before specials.
-                foreach (var productQuantity in request.Quantities)
-                {
-                    //get the Price from Products List.
-                    var itemPrice = productList.FirstOrDefault(x => x.Name == productQuantity.Name).Price;
-                    totalCost += itemPrice * productQuantity.Quantity;
-                }
-
-                foreach (var specialProducts in specials)
-                {
-                    if (ProductsExistInSpecials(productList, specialProducts.Quantities))
-                    {
-                        foreach (var splQuantity in specialProducts.Quantities)
-                        {
-                            if (productQuantities.Where(x => x.Name == splQuantity.Name).Any())
-                            {
-                                var productQty = productQuantities.Where(x => x.Name == splQuantity.Name).FirstOrDefault().Quantity;
-                                if (productQty >= splQuantity.Quantity)
-                                    specialProducts.IsValid = true;
-                                else
-                                    specialProducts.IsValid = false;
-                            }
-                        }
-                    }
-                }
-                bool specialsQtyEqualsProdQty = false;
-                //check if any of the specials are valid.
-                if (specials.Where(x => x.IsValid == true).Count() > 0)
-                {
-                    //Take the least applicable total for the Specials.
-                    var applicableSpecial = specials.Where(x => x.IsValid == true).OrderBy(x => x.Total).FirstOrDefault();
-
-                    foreach (var item in applicableSpecial.Quantities)
-                    {
-                        if (productQuantities.Where(x => x.Name == item.Name).Any())
-                        {
-                            var productQty = productQuantities.Where(x => x.Name == item.Name).FirstOrDefault().Quantity;
-                            if (productQty > item.Quantity)
-                            {
-                                var diffQty = productQty - item.Quantity;
-                                //get the price of the product item.
-                                var productPrice = productList.Where(x => x.Name == item.Name).FirstOrDefault().Price;
-                                var costOfProduct = diffQty * productPrice;
-                                lowestCost += costOfProduct;
-                            }
-                            else
-                            {
-                                if (productQty == item.Quantity)
-                                    specialsQtyEqualsProdQty = true;
-                            }
-                        }
-                    }
-                    //if the product quantity is equal to specials quantity; just the specials price.
-                    if (specialsQtyEqualsProdQty)
-                    {
-                        lowestCost = applicableSpecial.Total;
-                    }
-                    else
-                    {
-                        // lowestCost = await serviceAPIRepository.GetLowestPrice(request);
-                        return lowestCost;
-                    }
-                }
-                else
-                {
-                    //no valid specials.
-                    lowestCost = totalCost;
-                }
-                return lowestCost;
-
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex.StackTrace);
-                throw ex;
-            }
-        }
-
-
-        private Special GetBestApplicableSpecial(IEnumerable<Special> validSpecials, List<ProductQuantities> productQuantities)
-        {
-            var totalQuantities = productQuantities.Sum(x => x.Quantity);
-
-            List<Special> applicableSpecials = new List<Special>();
-
-            var productNames = productQuantities.Select(x => x.Name);
-
-            foreach (var special in validSpecials)
-            {
-                //count the quantity of products.
-                var specialQtySum = special.Quantities.Where(x => productNames.Contains(x.Name)).Sum(x => x.Quantity);
-                if (specialQtySum <= totalQuantities)
-                {
-                    special.TotalValidQty = specialQtySum;
-                    applicableSpecials.Add(special);
-                }
-            }
-
-            var orderedApplicableSpecials = applicableSpecials.OrderByDescending(x => x.TotalValidQty).FirstOrDefault();
-            return orderedApplicableSpecials;
-        }
-
-
-        private bool ProductsExistInSpecials(List<TrolleyProduct> productList, List<ProductQuantities> quantities)
-        {
-            bool exists = false;
-            foreach (var product in productList)
-            {
-                if (quantities.Where(x => x.Name == product.Name).Any())
-                    exists = true;
-                else
-                    exists = false;
-            }
-            return exists;
         }
     }
 }
