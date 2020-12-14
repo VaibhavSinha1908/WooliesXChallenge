@@ -11,7 +11,7 @@ This repo is for Woolworth's Tech Challenge to Build a Asp.Net Core Web API for 
 
 ## Assumptions & Considerations
 1) The recommended product sort is done based on the quantity and not the price as the super market could rate popularity based on the quantity.
-2) The TrolleyTotal Endpoint calls the TrollerCalculator API to caculate the least trolley price. The custom implementation as implement only works for certain scenarios. For a complete end to end customization of calculator API, various rule engines such as Drools that is also available for .Net. [https://csharp-source.net/open-source/rule-engines]
+2) A custom implementation for TrolleyTotal Endpoint has been included. This implementation is based on DFS algorithm. I have not used the Resources API end point to calculate the lowest trolley price. 
 3) All the application logging can be found on the logstream of the app-service.
 
 
