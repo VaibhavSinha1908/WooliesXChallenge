@@ -10,7 +10,7 @@ This repo is for Woolworth's Tech Challenge to Build a Asp.Net Core Web API for 
 
 1. Backend API: .Net Core 3.1, C#, and NUnit, MOQ for unit tests.
 2. Polly for stream lined API calls and retries functionalities.
-3. Fluent Validations for Model properties type and custom validations around them.
+3. Fluent Validations for Model properties type check and custom validations around them.
 4. Feature Flags used for implementating the custom features that can be enabled or disabled from config.
 5. Cloud Platform: Azure (app-service)
 
