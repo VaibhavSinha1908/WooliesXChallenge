@@ -10,6 +10,7 @@ namespace WoolworthsWebAPI.Models.Validators
                 .NotEmpty().WithMessage("The request has to have atleast 1 product.");
             RuleFor(x => x.Quantities)
                 .NotEmpty().WithMessage("The request has to have atleast 1 quantity for product.");
+
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using WoolworthsWebAPI.Models;
 
@@ -12,18 +13,20 @@ namespace WoolworthsWebAPI.Repositories
 {
     public class ServiceAPIRepository : IServiceAPIRepository
     {
+        private readonly IHttpClientFactory httpClientFactory;
         private readonly HttpClient httpClient;
         private readonly ILogger<ServiceAPIRepository> logger;
         private readonly IConfiguration configuration;
         private readonly string _remoteServiceBaseUrl;
 
-        public ServiceAPIRepository(HttpClient httpClient, ILogger<ServiceAPIRepository> logger, IConfiguration configuration)
+        public ServiceAPIRepository(IHttpClientFactory httpClientFactory, ILogger<ServiceAPIRepository> logger, IConfiguration configuration)
         {
-
-            this.httpClient = httpClient; this.httpClient = httpClient;
+            this.httpClientFactory = httpClientFactory;
 
             this.logger = logger;
             this.configuration = configuration;
+
+            httpClient = httpClientFactory.CreateClient("WooliesX");
         }
 
         public async Task<List<CustomerShoppingHistory>> GetCustomerShoppingHistoryAsync()
@@ -31,8 +34,8 @@ namespace WoolworthsWebAPI.Repositories
             List<CustomerShoppingHistory> response;
             try
             {
-                var shoppingHistoryUrl = configuration.GetValue<string>("ApplicationData:Resources:ShopperHistoryUrl")
-                    + configuration.GetValue<string>("ApplicationData:AppToken");
+
+                var shoppingHistoryUrl = configuration.GetValue<string>("ApplicationData:AppToken");
                 var responseString = await httpClient.GetStringAsync(shoppingHistoryUrl);
 
                 if (responseString != null)
@@ -61,9 +64,8 @@ namespace WoolworthsWebAPI.Repositories
             {
                 var trolleyCalculatorUrl = configuration.GetValue<string>("ApplicationData:Resources:TrolleyCalculatorUrl")
                     + configuration.GetValue<string>("ApplicationData:AppToken");
-                var serializedRequest = JsonConvert.SerializeObject(request);
-                var stringContent = new StringContent(serializedRequest.ToString());
-                stringContent.Headers.ContentType.MediaType = "application/json";
+
+                StringContent stringContent = new StringContent(JsonConvert.SerializeObject(request), UnicodeEncoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(trolleyCalculatorUrl, stringContent);
                 if (response.IsSuccessStatusCode)
                 {

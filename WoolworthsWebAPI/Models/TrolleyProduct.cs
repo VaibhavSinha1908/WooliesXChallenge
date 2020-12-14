@@ -9,6 +9,7 @@ namespace WoolworthsWebAPI.Models
         [Required]
         public string Name { get; set; }
 
+
         [JsonProperty("price")]
         [Required]
         public decimal Price { get; set; }
