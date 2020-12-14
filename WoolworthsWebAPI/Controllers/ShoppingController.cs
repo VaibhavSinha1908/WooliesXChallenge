@@ -19,7 +19,6 @@ namespace WoolworthsWebAPI.Controllers
             this.logger = logger;
         }
 
-
         /// <summary>
         /// GET: To get the username and token for the user.
         /// </summary>

@@ -14,7 +14,6 @@ namespace WoolworthsWebAPI.Test
 {
     public class Tests
     {
-
         private ServiceAPIRepository APIRepository { get; set; }
         private ShoppingService ShoppingService { get; set; }
 
@@ -47,7 +46,7 @@ namespace WoolworthsWebAPI.Test
             var result = await ShoppingService.GetUserDataAsync();
 
             Assert.NotNull(result);
-            Assert.That(result.name == "Vaibhav Kumar" && result.token == "bbb294ce-5906-4724-8638-088e513050e8");
+            Assert.That(result.name == "Vaibhav Kumar" && result.token == "634ed577-a0f6-4da0-80db-27e3d17646ac");
         }
 
 
@@ -189,8 +188,5 @@ namespace WoolworthsWebAPI.Test
 
             Assert.That(result == expectedOutput);
         }
-
-
-
     }
 }
