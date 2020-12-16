@@ -31,7 +31,7 @@ namespace WoolworthsWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //Adding custom filter for fluent validations.
+            //Adding custom filter for validations.
             services.AddMvc(options =>
             {
                 options.Filters.Add<ValidationFilter>();
